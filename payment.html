@@ -110,7 +110,7 @@
             
                 </div>
         
-                <input type="submit" value="Proceed to checkout" class="submit-btn" onmousedown="window.location.href = 'blog.html' ">
+                <input type="submit" value="Proceed to checkout" class="submit-btn" onclick="showAlert()" onmouseleave ="window.location.href = 'blog.html' ">
         
             </form>
         </div>    
@@ -126,7 +126,11 @@
             </div>
         </header>
     </div>
-
+<script>
+    function showAlert() {
+    alert ("Thanks for contributing!");
+  }
+</script>
 
     
 </body>
