@@ -63,58 +63,19 @@ nav .logo {
     background-repeat: no-repeat;
     background-position-y: 60px;
     background-size: contain;
-    height: 650px;
+    height: 100%;
     display: flex;
     align-items: center;
 }
 
 header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
 }
 
-header .hero-image {
-    position: fixed;
-    left: 880px;
-    top: 100px;
-}
-
-header h1 {
-    font-family: 'Poppins Medium';
-    font-style: normal;
-    font-weight: 1000;
-    font-size: 90px;
-    line-height: 200px;
-    position: fixed;
-    left: 920px;
-    bottom:40px;
-    text-align: center;
-
-    color: #000000;
-}
-
-header h2 {
-    font-family: 'Poppins Medium';
-    font-style: normal;
-    font-weight: 100;
-    font-size: 29px;
-    line-height: 60px;
-    position: fixed;
-    left: 220px;
-    top:200px;
-    text-align: right;
-    margin-right: 850px;
-    color: #000000;
-}
-header p {
-    font-family: 'Poppins Medium';
-    font-style: normal;
-    font-weight: 200;
-    font-size: 22px;
-    line-height: 20px;
-    text-align:center;
-    color: #000000;
-    position: fixed;
-    left: 930px;
-    bottom:50px;
+table{
+    align-content: center;
+    margin-top: 30px;
+    border-radius: 8px;
 }

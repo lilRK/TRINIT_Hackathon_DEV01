@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="style3.css">
 </head>
 <body>
@@ -19,9 +20,11 @@
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-
                     <li>
-                        <a href="">Contact us</a>
+                        <a href="browse.html">Browse</a>
+                    </li>
+                    <li>
+                        <a href="blog.html">Blog</a>
                     </li>
 
                 </ul>
@@ -29,20 +32,150 @@
         </div>
     </div>
     <div class="header-container">
-        <header>
-            <div class="hero-image">
-                <img src="images/Logo.png" alt="">
+            <div class="container mt-3">
+                <div class="input-group mb-3">
+                    <input id="SearchBar" type="text" class="form-control" placeholder="Search NGOs" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                    <div class="input-group-append">
+                        <select class="custom-select" id="CategorySelected">
+                            <option selected value="1">By Name</option>
+                            <option value="2">By Location</option>
+                            <option value="3">By Type</option>
+                            <option value="4">By Fund</option>
+                          </select>
+                      <button id ="SearchBtn" class="btn btn-green text-black" type="button">Search</button>
+                    </div>
+                  </div>
+                <table class="table table-dark text-white">
+                    <thead>
+                        <th>Sno</th>
+                        <th>Name of Organisation</th>
+                        <th>Location</th>
+                        <th>Type</th>
+                        <th>Fund</th>
+                        <th>Pay</th>
+                    </thead>
+                    <tbody id="tbody1">
+                        
+                    </tbody>
+                </table>
             </div>
-            <div class="hero-content">
-                <h1>doogood</h1>
-                <p>
-                    where philanthropists meets NGO's.
-                </p>
-                <h2>
-                </h2>
-
-            </div>
-        </header>
     </div>
+
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-database.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+
+   
+
+    <script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyAQQ1zeYE_XrfYNtkoA-avAfxcwU_h6UZI",
+        authDomain: "doogoodngo.firebaseapp.com",
+        databaseURL: "https://doogoodngo-default-rtdb.firebaseio.com",
+        projectId: "doogoodngo",
+        storageBucket: "doogoodngo.appspot.com",
+        messagingSenderId: "359208790435",
+        appId: "1:359208790435:web:623e76b05aef7f2ab61216"
+    };
+
+  // initialize firebase
+  firebase.initializeApp(firebaseConfig);
+
+
+    function SelectAllData(){
+    firebase.database().ref('doogoodngo').once('value',
+    function(AllRecords){
+        AllRecords.forEach(
+            function(CurrentRecord){
+                var nameoforg = CurrentRecord.val().name;
+                var fundneed = CurrentRecord.val().fund;
+                var type = CurrentRecord.val().goal;
+                var location = CurrentRecord.val().loc;
+                AddItemsToTable(nameoforg,location,type,fundneed);
+            }
+        );
+
+    });
+}
+
+window.onload = SelectAllData;
+
+var sno = 0;
+function AddItemsToTable(nameoforg,location,type,fundneed){
+    var tbody = document.getElementById('tbody1');
+    var trow = document.createElement('tr');
+    var td0 = document.createElement('td');
+    var td1 = document.createElement('td');
+    var td2 = document.createElement('td');
+    var td3 = document.createElement('td');
+    var td4 = document.createElement('td');
+    td0.innerHTML= ++sno;
+    td1.innerHTML= nameoforg;
+    td2.innerHTML= location;
+    td3.innerHTML= type;
+    td4.innerHTML= fundneed;
+    
+    td1.classList +="nameField";
+    td2.classList +="locField";
+    td3.classList +="typeField";
+    td4.classList +="fundField";
+
+    trow.appendChild(td0); 
+    trow.appendChild(td1); 
+    trow.appendChild(td2); 
+    trow.appendChild(td3); 
+    trow.appendChild(td4);
+
+    var ContactDiv = document.createElement("div");
+    ContactDiv.innerHTML= '<a href="payment.html"><button type="button" class="btn btn-primary">Pay</button></a>'
+    
+    trow.appendChild(ContactDiv);
+    tbody.appendChild(trow);
+}
+
+const searchBar = document.getElementById("SearchBar");
+const categorySelect = document.getElementById("CategorySelected");
+
+document.getElementById("SearchBtn").addEventListener("click", function() {
+  const searchValue = searchBar.value;
+  const categoryValue = categorySelect.value;
+  
+  document.getElementById("tbody1").innerHTML = "";
+  
+  firebase.database().ref('doogoodngo').once('value', function(AllRecords) {
+    let filteredData = [];
+    
+    AllRecords.forEach(function(CurrentRecord) {
+      if (categoryValue === "1") {
+        if (CurrentRecord.val().name.toLowerCase().includes(searchValue.toLowerCase())) {
+          filteredData.push(CurrentRecord);
+        }
+      } else if (categoryValue === "2") {
+        if (CurrentRecord.val().loc.toLowerCase().includes(searchValue.toLowerCase())) {
+          filteredData.push(CurrentRecord);
+        }
+      } else if (categoryValue === "3") {
+        if (CurrentRecord.val().goal.toLowerCase().includes(searchValue.toLowerCase())) {
+          filteredData.push(CurrentRecord);
+        }
+      } else if (categoryValue === "4") {
+        if (CurrentRecord.val().fund.toLowerCase().includes(searchValue.toLowerCase())) {
+          filteredData.push(CurrentRecord);
+        }
+      }
+    });
+    
+    filteredData.forEach(function(CurrentRecord) {
+      const nameoforg = CurrentRecord.val().name;
+      const fundneed = CurrentRecord.val().fund;
+      const type = CurrentRecord.val().goal;
+      const location = CurrentRecord.val().loc;
+      AddItemsToTable(nameoforg, location, type, fundneed);
+    });
+  });
+});
+
+    </script>
 </body>
 </html>

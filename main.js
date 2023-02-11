@@ -21,10 +21,10 @@ const firebaseConfig = {
   
     var name = getElementVal("name");
     var goal = getElementVal("goal");
-    var prvs = getElementVal("prvs");
+    var loc = getElementVal("loc");
     var fund = getElementVal("fund");
   
-    saveMessages(name, prvs, goal, fund);
+    saveMessages(name, loc, goal, fund);
   
     //   enable alert
     document.querySelector(".alert").style.display = "block";
@@ -38,12 +38,12 @@ const firebaseConfig = {
     document.getElementById("doogoodngo").reset();
   }
   
-  const saveMessages = (name, prvs, goal, fund) => {
+  const saveMessages = (name, loc, goal, fund) => {
     var newdoogoodngo = doogoodngoDB.push();
   
     newdoogoodngo.set({
       name: name,
-      prvs: prvs,
+      loc: loc,
       goal: goal,
       fund: fund,
     });
