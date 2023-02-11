@@ -47,7 +47,6 @@
                   </div>
                 <table class="table table-dark text-white">
                     <thead>
-                        <th>Sno</th>
                         <th>Name of Organisation</th>
                         <th>Location</th>
                         <th>Type</th>
@@ -101,16 +100,13 @@
 
 window.onload = SelectAllData;
 
-var sno = 0;
 function AddItemsToTable(nameoforg,location,type,fundneed){
     var tbody = document.getElementById('tbody1');
     var trow = document.createElement('tr');
-    var td0 = document.createElement('td');
     var td1 = document.createElement('td');
     var td2 = document.createElement('td');
     var td3 = document.createElement('td');
     var td4 = document.createElement('td');
-    td0.innerHTML= ++sno;
     td1.innerHTML= nameoforg;
     td2.innerHTML= location;
     td3.innerHTML= type;
@@ -120,8 +116,7 @@ function AddItemsToTable(nameoforg,location,type,fundneed){
     td2.classList +="locField";
     td3.classList +="typeField";
     td4.classList +="fundField";
-
-    trow.appendChild(td0); 
+ 
     trow.appendChild(td1); 
     trow.appendChild(td2); 
     trow.appendChild(td3); 

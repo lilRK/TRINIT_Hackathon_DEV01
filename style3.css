@@ -60,12 +60,12 @@ nav .logo {
 
 .header-container {
     background: #80b8f5 url();
+    min-height: 100vh;
     background-repeat: no-repeat;
     background-position-y: 60px;
     background-size: contain;
     height: 100%;
     display: flex;
-    align-items: center;
 }
 
 header {
